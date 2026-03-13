@@ -1,0 +1,57 @@
+<div class="container"><h1> Todo-List </h1>
+
+<input placeholder="Search..."[(ngModel)]="searchText">
+
+<div style="margin-top:10px;">
+    
+    <button (click)="filter='All'">All</button> &nbsp;
+    <button (click)="filter='Active'">Active</button>&nbsp;
+    <button (click)="filter='Completed'">Completed</button>
+
+</div>
+
+<button (click)="clearCompleted()">clear Completed</button>
+
+<br>
+
+<input type="text" placeholder="Enter the text" [(ngModel)]="newTask" name="task"> &nbsp;
+
+<button (click)="addTask()" >Add</button> &nbsp;
+
+<input type="date" [(ngModel)]="newDate">
+
+<select [(ngModel)]="selectedPriority" name="priority"> 
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+</select>
+
+<p>
+    Total: {{totalTasks}} |
+    Completed: {{completedTasks}} |
+    Pending: {{pendingTasks}}
+</p>
+
+<ul [ngClass]="'no-bullets'">
+
+    <li *ngFor="let task of filteredTasks; let i = index" [ngClass]="'task-item'" 
+        [style.borderLeft]="
+      task.priority === 'High' ? '100px solid red' :
+      task.priority === 'Medium' ? '100px solid orange':'100px solid green'">
+
+        <input type="checkbox" [(ngModel)]="task.completed" (change)="saveTasks()">
+
+        <span [style.textDecoration]="task.completed? 'line-through':'none'">
+            {{task.name}} {{task.date}}({{task.priority}})</span> &nbsp;
+
+            
+    <button  (click)="editTask(i)">Edit </button>  &nbsp; 
+   
+    <button (click)="deleteTask(i)">Delete</button>
+
+    <button (click)="checkDueDate(task)">Check Due</button>
+
+    </li>
+</ul>
+</div>
+
