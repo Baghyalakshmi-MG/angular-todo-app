@@ -27,6 +27,7 @@ export class TDappComponent {
       selectedPriority:string = 'Medium';
       newDate: string='';
       searchText:string='';
+      today: string = new Date().toISOString().split('T')[0];
 
       ngOnInit(){
         if(isPlatformBrowser(this.platformId)){
@@ -42,6 +43,12 @@ export class TDappComponent {
         if(this.newTask.trim()===''){
           return;
         }
+    const today = new Date().toISOString().split('T')[0];
+
+  if(this.newDate && this.newDate < today){
+    alert("Past dates are not allowed!");
+    return;
+  }
         if(this.editIndex === null){
         this.tasks.push({name:this.newTask, 
                          completed:false, 
